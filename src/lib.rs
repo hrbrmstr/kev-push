@@ -13,6 +13,7 @@ use serde_derive::{Serialize, Deserialize};
 const KEV_JSON_URL: &str = "https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json";
 const KEV_CATALOG_URL: &str = "https://www.cisa.gov/known-exploited-vulnerabilities-catalog";
 
+/// This enables (de)serialization of the KEV JSON as of 2022-09-024
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Kev {
 	#[serde(rename = "title")]
@@ -31,6 +32,7 @@ pub struct Kev {
 	pub(crate) vulnerabilities: Option<Vec<Vulnerability>>,
 }
 
+/// This enables (de)serialization of the KEV JSON as of 2022-09-024
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Vulnerability {
 	#[serde(rename = "cveID")]
@@ -61,6 +63,7 @@ pub struct Vulnerability {
 	pub(crate) notes: String,
 }
 
+/// This is used to read the locally cached KEV JSON file
 pub fn read_kev_cache_from_file<P: AsRef<Path>>(path: P) -> Result<Kev, Error> {
 
 	let file = File::open(path)?;
@@ -71,15 +74,20 @@ pub fn read_kev_cache_from_file<P: AsRef<Path>>(path: P) -> Result<Kev, Error> {
 	Ok(u)
 }
 
+/// This uses Pushover to notify when there's a new KEV release
 pub fn notify() {
 
   if let Ok(token) = env::var("PUSHOVER_APP") {
 		if let Ok(user_key) = env::var("PUSHOVER_USER") {
+
 			let api = API::new();
+
 			let msg = SendMessage::new(token, user_key, format!("New KEV Update! {}", KEV_CATALOG_URL));
+
 			if let Err(response) = api.send(&msg) {
 			  eprintln!("{:?}", response)
 			}
+
 		} else {
 			eprintln!("PUSHOVER_USER environment variable is not set!")
 		}
@@ -89,6 +97,12 @@ pub fn notify() {
 
 }
 
+/// This is just a wrapper which makes it clearer what we're creating.
+pub fn create_kev_cache_file<P: AsRef<Path>>(kev_cache_file_path: P) -> Result<File, std::io::Error> {
+	File::create(kev_cache_file_path)
+}
+
+/// This is just a wrapper function which makes it clearer what we're fetching.
 pub fn read_kev_from_cisa() -> Result<Kev, reqwest::Error> {
 	reqwest::blocking::get(KEV_JSON_URL)?.json::<Kev>()
 }
