@@ -1,6 +1,6 @@
 use std::env;
-use std::fs::{File};
-use std::io::{BufReader};
+use std::fs::File;
+use std::io::BufReader;
 use std::path::Path;
 
 use anyhow::{Result, Error};
