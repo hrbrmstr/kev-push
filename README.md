@@ -19,6 +19,24 @@ is used as the base cache directory, so the cache file is at `~/.cache/kev-cache
 On Windows the base cache directory is `%LOCALAPPDATA%`,
 so the cache file is at (`C:\\Users\\%USERNAME%\\AppData\\Local\\kev-cache\\kev.json`).
 
+## Why?
+
+This is intended to be more of an example crate than something you'd really want to use since you could replicate the functionality in a very small shell script.
+
+Things it demonstrates:
+
+- Simple binary crate error handling (bubbling up to `main()`) with `anyhow`.
+- Using `reqwest` in blocking mode directly.
+- Using a third-party REST API crate (`pushover`) with environment variables.
+- JSON [de]serialization (via `serde_derive`) from URLs and files.
+- Platform/target-specific features, including common platform directories and (macOS notifications.
+- Customized `rustfmt` defaults.
+- A fairly comprehensive `justfile`, including recipes for:
+    - (macOS) creating and code-signing universal binaries
+		- SBOM + dependency graph generation
+		- generating crate docs to `docs/` for easy GH pages usage
+
+
 ## Dependencies
 
 - [SBOM](bom.xml)
