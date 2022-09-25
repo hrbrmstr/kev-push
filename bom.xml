@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<bom serialNumber="urn:uuid:22df9569-fcb8-441a-bf91-52c045e42d7b" version="1" xmlns="http://cyclonedx.org/schema/bom/1.3">
+  <metadata>
+    <timestamp>2022-09-25T11:46:28.076347Z</timestamp>
+    <component type="application">
+      <name>kev-push</name>
+      <version>0.1.0</version>
+      <purl>pkg:cargo/kev-push@0.1.0</purl></component></metadata>
+  <components>
+    <component type="library">
+      <name>anyhow</name>
+      <version>1.0.65</version>
+      <description><![CDATA[Flexible concrete Error type built on std::error::Error]]></description>
+      <purl>pkg:cargo/anyhow@1.0.65</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT OR Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.rs/anyhow</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/dtolnay/anyhow</url></reference></externalReferences></component>
+    <component type="library">
+      <name>chrono</name>
+      <version>0.4.22</version>
+      <description><![CDATA[Date and time library for Rust]]></description>
+      <purl>pkg:cargo/chrono@0.4.22</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT/Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.rs/chrono/</url></reference>
+        <reference type="website">
+          <url>https://github.com/chronotope/chrono</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/chronotope/chrono</url></reference></externalReferences></component>
+    <component type="library">
+      <name>mac-notification-sys</name>
+      <version>0.5.6</version>
+      <description><![CDATA[Thin wrapper around macOS Notifications.]]></description>
+      <purl>pkg:cargo/mac-notification-sys@0.5.6</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://h4llow3en.github.io/mac-notification-sys/mac_notification_sys/</url></reference>
+        <reference type="website">
+          <url>https://github.com/h4llow3En/mac-notification-sys</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/h4llow3En/mac-notification-sys</url></reference></externalReferences></component>
+    <component type="library">
+      <name>platform-dirs</name>
+      <version>0.3.0</version>
+      <description><![CDATA[A library for obtaining platform dependant directory paths for application and user directories]]></description>
+      <purl>pkg:cargo/platform-dirs@0.3.0</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT</expression></license></licenses>
+      <externalReferences>
+        <reference type="vcs">
+          <url>https://github.com/cjbassi/platform-dirs-rs</url></reference></externalReferences></component>
+    <component type="library">
+      <name>pushover</name>
+      <version>0.4.0</version>
+      <description><![CDATA[A wrapper for the Pushover API.]]></description>
+      <purl>pkg:cargo/pushover@0.4.0</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.rs/pushover</url></reference>
+        <reference type="website">
+          <url>https://github.com/sb89/pushover</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/sb89/pushover.git</url></reference></externalReferences></component>
+    <component type="library">
+      <name>reqwest</name>
+      <version>0.11.12</version>
+      <description><![CDATA[higher level HTTP client library]]></description>
+      <purl>pkg:cargo/reqwest@0.11.12</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT/Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.rs/reqwest</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/seanmonstar/reqwest</url></reference></externalReferences></component>
+    <component type="library">
+      <name>serde</name>
+      <version>1.0.145</version>
+      <description><![CDATA[A generic serialization/deserialization framework]]></description>
+      <purl>pkg:cargo/serde@1.0.145</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT OR Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.serde.rs/serde/</url></reference>
+        <reference type="website">
+          <url>https://serde.rs</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/serde-rs/serde</url></reference></externalReferences></component>
+    <component type="library">
+      <name>serde_derive</name>
+      <version>1.0.145</version>
+      <description><![CDATA[Macros 1.1 implementation of #[derive(Serialize, Deserialize)]]]></description>
+      <purl>pkg:cargo/serde_derive@1.0.145</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT OR Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://serde.rs/derive.html</url></reference>
+        <reference type="website">
+          <url>https://serde.rs</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/serde-rs/serde</url></reference></externalReferences></component>
+    <component type="library">
+      <name>serde_json</name>
+      <version>1.0.85</version>
+      <description><![CDATA[A JSON serialization file format]]></description>
+      <purl>pkg:cargo/serde_json@1.0.85</purl>
+      <scope>required</scope>
+      <licenses>
+        <license>
+          <expression>MIT OR Apache-2.0</expression></license></licenses>
+      <externalReferences>
+        <reference type="documentation">
+          <url>https://docs.serde.rs/serde_json/</url></reference>
+        <reference type="vcs">
+          <url>https://github.com/serde-rs/json</url></reference></externalReferences></component></components></bom>
