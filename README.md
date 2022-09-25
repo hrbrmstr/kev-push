@@ -32,10 +32,25 @@ Things it demonstrates:
 - Platform/target-specific features, including common platform directories and (macOS notifications.
 - Customized `rustfmt` defaults.
 - A fairly comprehensive `justfile`, including recipes for:
-    - (macOS) creating and code-signing universal binaries
-		- SBOM + dependency graph generation
-		- generating crate docs to `docs/` for easy GH pages usage
+	- (macOS) creating and code-signing universal binaries
+	- SBOM + dependency graph creation
+	- generating crate docs to `docs/` for easy GH pages usage
 
+## Installation
+
+```bash
+cargo install --git https://github.com/hrbrmstr/kev-push --branch batman
+```
+
+## Building (release)
+
+Assuming you use [Just](https://github.com/casey/just):
+
+```bash
+git clone git@github.com:hrbrmstr/kev-push && \
+	cd kev-push && \
+	just release
+```
 
 ## Dependencies
 
