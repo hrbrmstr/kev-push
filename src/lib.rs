@@ -1,9 +1,9 @@
 //! # kev-push
 //!
-//! This crate builds a binary that will compare
+//! This crate ([source](https://github.com/hrbrmstr/kev-push) builds a binary that will compare
 //! [CISA's current KEV Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog";)
 //! to a locally cached copy and send a [Pushover](https://pushover.net) notification
-//! if there is a new update.
+//! if there is a new update. On macOS a desktop notification will also be displayed.
 //!
 //! You can, say, put it in a cron job to check at some regularity and be notified whenever
 //! there is a new addition to the catalog.

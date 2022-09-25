@@ -161,12 +161,25 @@
 <span id="161">161</span>
 <span id="162">162</span>
 <span id="163">163</span>
+<span id="164">164</span>
+<span id="165">165</span>
+<span id="166">166</span>
+<span id="167">167</span>
+<span id="168">168</span>
+<span id="169">169</span>
+<span id="170">170</span>
+<span id="171">171</span>
+<span id="172">172</span>
+<span id="173">173</span>
+<span id="174">174</span>
+<span id="175">175</span>
+<span id="176">176</span>
 </pre><pre class="rust"><code><span class="doccomment">//! # kev-push</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! This crate builds a binary that will compare</span>
+<span class="doccomment">//! This crate ([source](https://github.com/hrbrmstr/kev-push) builds a binary that will compare</span>
 <span class="doccomment">//! [CISA&#39;s current KEV Catalog](https://www.cisa.gov/known-exploited-vulnerabilities-catalog&quot;;)</span>
 <span class="doccomment">//! to a locally cached copy and send a [Pushover](https://pushover.net) notification</span>
-<span class="doccomment">//! if there is a new update.</span>
+<span class="doccomment">//! if there is a new update. On macOS a desktop notification will also be displayed.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! You can, say, put it in a cron job to check at some regularity and be notified whenever</span>
 <span class="doccomment">//! there is a new addition to the catalog.</span>
@@ -184,6 +197,9 @@
 <span class="kw">use</span> <span class="ident">pushover::requests::message::SendMessage</span>;
 
 <span class="kw">use</span> <span class="ident">serde_derive</span>::{<span class="ident">Serialize</span>, <span class="ident">Deserialize</span>};
+
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;macos&quot;</span>)]</span>
+<span class="kw">use</span> <span class="ident">mac_notification_sys</span>::<span class="kw-2">*</span>;
 
 <span class="kw">const</span> <span class="ident">KEV_JSON_URL</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;https://www.cisa.gov/sites/default/files/feeds/known_exploited_vulnerabilities.json&quot;</span>;
 <span class="kw">const</span> <span class="ident">KEV_CATALOG_URL</span>: <span class="kw-2">&amp;</span><span class="ident">str</span> <span class="op">=</span> <span class="string">&quot;https://www.cisa.gov/known-exploited-vulnerabilities-catalog&quot;</span>;
@@ -261,13 +277,22 @@
 <span class="doccomment">/// This uses Pushover to notify when there&#39;s a new KEV release</span>
 <span class="doccomment">/// You need to have the `PUSHOVER_USER` (key) and `PUSHOVER_APP` (token)</span>
 <span class="doccomment">/// environment variables set in order for the notification to work.</span>
+<span class="doccomment">/// </span>
+<span class="doccomment">/// On macOS a desktop notification will also be displayed.</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify</span>() {
 	<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">token</span>) <span class="op">=</span> <span class="ident">env::var</span>(<span class="string">&quot;PUSHOVER_APP&quot;</span>) {
 		<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">user_key</span>) <span class="op">=</span> <span class="ident">env::var</span>(<span class="string">&quot;PUSHOVER_USER&quot;</span>) {
 			<span class="kw">let</span> <span class="ident">api</span> <span class="op">=</span> <span class="ident">API::new</span>();
 
-			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="ident">SendMessage::new</span>(<span class="ident">token</span>, <span class="ident">user_key</span>, <span class="macro">format!</span>(<span class="string">&quot;New KEV Update! {}&quot;</span>, <span class="ident">KEV_CATALOG_URL</span>));
+			<span class="kw">let</span> <span class="ident">msg</span> <span class="op">=</span> <span class="ident">SendMessage::new</span>(<span class="ident">token</span>, <span class="ident">user_key</span>, <span class="macro">format!</span>(<span class="string">&quot;New KEV Release! {}&quot;</span>, <span class="ident">KEV_CATALOG_URL</span>));
 
+			<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">target_os</span><span class="op">=</span><span class="string">&quot;macos&quot;</span>)]</span>
+			{
+				<span class="kw">let</span> <span class="ident">bundle</span> <span class="op">=</span> <span class="ident">get_bundle_identifier_or_default</span>(<span class="string">&quot;com.apple.Terminal&quot;</span>);
+				<span class="ident">set_application</span>(<span class="kw-2">&amp;</span><span class="ident">bundle</span>).<span class="ident">unwrap</span>();
+				<span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">send_notification</span>(<span class="string">&quot;New KEV Release!&quot;</span>, <span class="prelude-val">None</span>, <span class="macro">format!</span>(<span class="string">&quot;Visit {} for more info.&quot;</span>, <span class="ident">KEV_CATALOG_URL</span>).<span class="ident">as_str</span>(), <span class="prelude-val">None</span>).<span class="ident">unwrap</span>();
+			}
+			
 			<span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Err</span>(<span class="ident">response</span>) <span class="op">=</span> <span class="ident">api</span>.<span class="ident">send</span>(<span class="kw-2">&amp;</span><span class="ident">msg</span>) {
 				<span class="macro">eprintln!</span>(<span class="string">&quot;{:?}&quot;</span>, <span class="ident">response</span>)
 			}
@@ -281,13 +306,14 @@
 
 <span class="doccomment">/// At first launch, this will cache the current KEV JSON. Subsequent launches will</span>
 <span class="doccomment">/// then compare the current catalog served from CISA&#39;s site with the cached one</span>
-<span class="doccomment">/// and both update the local cache and fire off a notification.</span>
+<span class="doccomment">/// and both update the local cache and fire off a notification. macOS users will also</span>
+<span class="doccomment">/// receive a desktop notification.</span>
 <span class="doccomment">/// </span>
 <span class="doccomment">/// On macOS and linux, </span>
 <span class="doccomment">/// [`XDG_CACHE_HOME`](https://specifications.freedesktop.org/basedir-spec/basedir-spec-latest.html)</span>
 <span class="doccomment">/// is used as the base cache directory, so the cache file is at `~/.cache/kev-cache/kev.json`.</span>
 <span class="doccomment">/// </span>
-<span class="doccomment">/// On Windows the cache file directory base is `%LOCALAPPDATA%`,</span>
+<span class="doccomment">/// On Windows the base cache directory is `%LOCALAPPDATA%`,</span>
 <span class="doccomment">/// so the cache file is at (`C:\\Users\\%USERNAME%\\AppData\\Local\\kev-cache\\kev.json`).</span>
 <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span>() -&gt; <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), <span class="ident">Error</span><span class="op">&gt;</span> {
 	<span class="kw">let</span> <span class="ident">app_dirs</span>: <span class="ident">AppDirs</span> <span class="op">=</span> <span class="ident">AppDirs::new</span>(<span class="prelude-val">Some</span>(<span class="string">&quot;kev-cache&quot;</span>), <span class="bool-val">true</span>).<span class="ident">expect</span>(<span class="string">&quot;Error idenfitying app dir&quot;</span>);

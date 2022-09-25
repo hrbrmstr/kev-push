@@ -1,0 +1,27 @@
+TARGET = Some("aarch64-apple-darwin")
+OPT_LEVEL = Some("0")
+HOST = Some("aarch64-apple-darwin")
+CC_aarch64-apple-darwin = None
+CC_aarch64_apple_darwin = None
+HOST_CC = None
+CC = None
+CFLAGS_aarch64-apple-darwin = None
+CFLAGS_aarch64_apple_darwin = None
+HOST_CFLAGS = None
+CFLAGS = None
+CRATE_CC_NO_DEFAULTS = None
+DEBUG = Some("true")
+CARGO_CFG_TARGET_FEATURE = Some("aes,crc,dit,dotprod,dpb,dpb2,fcma,fhm,flagm,fp16,frintts,jsconv,lor,lse,neon,paca,pacg,pan,pmuv3,ras,rcpc,rcpc2,rdm,sb,sha2,sha3,ssbs,vh")
+running: "cc" "-O0" "-ffunction-sections" "-fdata-sections" "-fPIC" "-g" "-fno-omit-frame-pointer" "-arch" "arm64" "-Wall" "-Wextra" "-fmodules" "-Wno-deprecated-declarations" "-mmacos-version-min=11.0" "-o" "/Users/hrbrmstr/Development/rust/kev-push/docs/debug/build/mac-notification-sys-a78f9ed91ac69cf3/out/objc/notify.o" "-c" "objc/notify.m"
+exit status: 0
+AR_aarch64-apple-darwin = None
+AR_aarch64_apple_darwin = None
+HOST_AR = None
+AR = None
+running: "ar" "cq" "/Users/hrbrmstr/Development/rust/kev-push/docs/debug/build/mac-notification-sys-a78f9ed91ac69cf3/out/libnotify.a" "/Users/hrbrmstr/Development/rust/kev-push/docs/debug/build/mac-notification-sys-a78f9ed91ac69cf3/out/objc/notify.o"
+exit status: 0
+running: "ar" "s" "/Users/hrbrmstr/Development/rust/kev-push/docs/debug/build/mac-notification-sys-a78f9ed91ac69cf3/out/libnotify.a"
+exit status: 0
+cargo:rustc-link-lib=static=notify
+cargo:rustc-link-search=native=/Users/hrbrmstr/Development/rust/kev-push/docs/debug/build/mac-notification-sys-a78f9ed91ac69cf3/out
+cargo:rerun-if-env-changed=MACOSX_DEPLOYMENT_TARGET
